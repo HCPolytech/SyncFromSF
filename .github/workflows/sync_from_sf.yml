@@ -48,6 +48,11 @@ jobs:
         cp -r ./metadata/* ./force-app/main/default/
         rm -rf ./metadata
 
+    - name: Configure Git
+      run: |
+        git config --global user.name "developerharb"
+        git config --global user.email "developer@harborcoatconsulting.com"
+
     - name: Commit Changes
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
