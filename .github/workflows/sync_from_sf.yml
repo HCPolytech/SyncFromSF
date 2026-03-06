@@ -44,7 +44,21 @@ jobs:
     - name: Pull Metadata
       run: |
         mkdir -p metadata
-        sf project retrieve start --metadata ApexClass,ApexTrigger,CustomObject,ApexPage,AuraDefinitionBundle,LightningComponentBundle,FlowDefinition,Flow,EmailTemplate,CustomMetadata,ConnectedApp --target-org production --output-dir ./metadata --ignore-conflicts
+        sf project retrieve start \
+          -m ApexClass \
+          -m ApexTrigger \
+          -m CustomObject \
+          -m ApexPage \
+          -m AuraDefinitionBundle \
+          -m LightningComponentBundle \
+          -m FlowDefinition \
+          -m Flow \
+          -m EmailTemplate \
+          -m CustomMetadata \
+          -m ConnectedApp \
+          --target-org production \
+          --output-dir ./metadata \
+          --ignore-conflicts
         cp -r ./metadata/* ./force-app/main/default/
         rm -rf ./metadata
 
