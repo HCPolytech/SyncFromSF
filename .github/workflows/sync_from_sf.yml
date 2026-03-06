@@ -30,21 +30,21 @@ jobs:
 
     - name: Install Salesforce CLI
       run: |
-        npm install --global sfdx-cli
-        sfdx --version
+        npm install --global @salesforce/cli
+        sf version
 
     - name: Authenticate Salesforce Org
       env:
         SFDX_AUTH_URL: ${{ secrets.sfdx_auth_url }}
       run: |
         echo $SFDX_AUTH_URL > sfdx.url
-        sfdx auth:sfdxurl:store -f sfdx.url -a production
+        sf org login sfdx-url --sfdx-url-file sfdx.url --alias production
         rm sfdx.url
 
     - name: Pull Metadata
       run: |
         mkdir -p metadata
-        sfdx force:source:retrieve -m ApexClass,ApexTrigger,CustomObject,ApexPage,AuraDefinitionBundle,LightningComponentBundle,FlowDefinition,Flow,EmailTemplate,CustomMetadata,ConnectedApp -u production -r ./metadata --ignore-conflicts
+        sf project retrieve start --metadata ApexClass,ApexTrigger,CustomObject,ApexPage,AuraDefinitionBundle,LightningComponentBundle,FlowDefinition,Flow,EmailTemplate,CustomMetadata,ConnectedApp --target-org production --output-dir ./metadata --ignore-conflicts
         cp -r ./metadata/* ./force-app/main/default/
         rm -rf ./metadata
 
